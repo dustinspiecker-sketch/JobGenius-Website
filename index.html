@@ -8,6 +8,7 @@
   <title>Bewerbungsassistent – Bewerben Mit KI In 60 Sekunden</title>
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest"></script>
   <style>
     body {
       font-family: 'Inter', sans-serif;
@@ -63,6 +64,22 @@
       font-weight: 700;
       margin-bottom: 50px;
     }
+    .intro {
+      text-align: center;
+      max-width: 700px;
+      margin: 30px auto 40px;
+      padding: 0 20px;
+    }
+    .intro h2 {
+      font-weight: 900;
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+    .intro p {
+      color: #555;
+      font-size: 1.1rem;
+      line-height: 1.5;
+    }
     .service-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -110,6 +127,26 @@
     .service-card a:hover {
       background: #153380;
     }
+    /* Features */
+    .features {
+      max-width: 1000px;
+      margin: 60px auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px;
+      text-align: center;
+    }
+    .feature-icon {
+      width: 40px;
+      height: 40px;
+      color: #1E40AF;
+      margin-bottom: 10px;
+    }
+    .feature-text {
+      font-weight: 600;
+      font-size: 1rem;
+    }
     footer {
       width: 100%;
       max-width: 1200px;
@@ -153,12 +190,19 @@
     </div>
   </nav>
 
-  <!-- Hauptbereich -->
+  <!-- Main content -->
   <main>
     <h1>Wähle deinen Service</h1>
     <p class="subtitle">Direkt starten – keine Registrierung</p>
+
+    <!-- Intro -->
+    <div class="intro">
+      <h2>Deine Bewerbung in 60 Sekunden</h2>
+      <p>Erstelle mit unserem KI-gestützten Bewerbungsassistenten blitzschnell professionelle Unterlagen – DSGVO-konform, sicher und individuell auf dich zugeschnitten.</p>
+    </div>
+
+    <!-- Services -->
     <div class="service-grid">
-      <!-- CV-Analyse -->
       <div class="service-card">
         <h2>CV-Analyse</h2>
         <p class="price">7,99 €</p>
@@ -167,7 +211,6 @@
         <p class="detail">Schnelle Analyse</p>
         <a href="formular.html">CV hochladen</a>
       </div>
-      <!-- Professionelles Anschreiben -->
       <div class="service-card">
         <h2>Professionelles Anschreiben</h2>
         <p class="price">7,99 €</p>
@@ -176,7 +219,6 @@
         <p class="detail">Passend auf die Stelle</p>
         <a href="formular.html">Anschreiben generieren</a>
       </div>
-      <!-- Bewerbungspaket -->
       <div class="service-card">
         <h2>Bewerbungspaket</h2>
         <p class="price">12,99 €</p>
@@ -184,6 +226,26 @@
         <p class="detail">Rundum-Optimierung</p>
         <p class="detail">Erfolgschancen steigern</p>
         <a href="formular.html">Paket wählen</a>
+      </div>
+    </div>
+
+    <!-- Features -->
+    <div class="features">
+      <div>
+        <i data-lucide="shield-check" class="feature-icon"></i>
+        <div class="feature-text">DSGVO-konform</div>
+      </div>
+      <div>
+        <i data-lucide="lock" class="feature-icon"></i>
+        <div class="feature-text">Keine Datenweitergabe</div>
+      </div>
+      <div>
+        <i data-lucide="message-circle" class="feature-icon"></i>
+        <div class="feature-text">Persönliches Feedback</div>
+      </div>
+      <div>
+        <i data-lucide="file-check" class="feature-icon"></i>
+        <div class="feature-text">Individuelle Ergebnisse</div>
       </div>
     </div>
   </main>
@@ -200,5 +262,9 @@
       <a href="https://instagram.com" target="_blank">Instagram</a>
     </div>
   </footer>
+
+  <script>
+    lucide.createIcons();
+  </script>
 </body>
 </html>
