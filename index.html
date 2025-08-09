@@ -8,7 +8,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet" />
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
-    /* Grundlayout */
     body {
       font-family: 'Inter', sans-serif;
       margin: 0;
@@ -16,7 +15,7 @@
       color: #18181B;
       scroll-behavior: smooth;
     }
-    /* Sticky Navbar */
+    /* Navbar */
     nav {
       position: sticky;
       top: 0;
@@ -51,15 +50,16 @@
     nav img {
       max-height: 50px;
       border-radius: 6px;
+      border: 1px solid #000; /* schwarzer Rahmen */
+      padding: 3px;
+      background-color: white; /* falls PNG transparent ist */
     }
-    /* Introblock */
+    /* Intro */
     .intro {
       text-align: center;
       max-width: 700px;
       margin: 60px auto 40px;
       padding: 0 20px;
-      transform: translateY(0);
-      transition: transform 0.3s ease;
     }
     .intro h1 {
       font-weight: 900;
@@ -74,7 +74,7 @@
     /* Service Header */
     .service-header {
       text-align: center;
-      margin-bottom: 50px;
+      margin-bottom: 40px;
     }
     .service-header h2 {
       font-size: 2rem;
@@ -108,22 +108,32 @@
     }
     .service-card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 6px 28px rgba(24,24,27,0.15);
+      box-shadow: 0 8px 32px rgba(24,24,27,0.15);
     }
     .service-card h3 {
       font-size: 1.6rem;
       font-weight: 700;
-      margin-bottom: 10px;
+      margin-bottom: 5px;
     }
     .service-card p.price {
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       font-weight: 700;
+      color: #1E40AF;
       margin-bottom: 15px;
     }
-    .service-card p.detail {
+    .service-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 20px 0;
+    }
+    .service-list li {
       font-size: 1rem;
-      color: #9e9ea7;
-      margin-bottom: 10px;
+      color: #555;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
     .service-card a {
       background: linear-gradient(90deg, #1E40AF, #153380);
@@ -141,7 +151,7 @@
     .service-card a:hover {
       background-position: right;
     }
-    /* Features Section */
+    /* Features */
     .features {
       background: #f3f4f6;
       padding: 60px 20px;
@@ -155,11 +165,25 @@
       gap: 30px;
       text-align: center;
     }
+    .feature-item {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .feature-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 20px rgba(24,24,27,0.15);
+    }
     .feature-icon {
       width: 40px;
       height: 40px;
       color: #1E40AF;
       margin-bottom: 10px;
+      transition: color 0.3s ease;
+    }
+    .feature-item:hover .feature-icon {
+      color: #153380;
     }
     .feature-text {
       font-weight: 600;
@@ -201,7 +225,7 @@
   </nav>
 
   <!-- Intro -->
-  <div class="intro fade-in" id="intro">
+  <div class="intro fade-in">
     <h1>Deine Bewerbung in 60 Sekunden</h1>
     <p>Erstelle mit unserem KI-gestützten Bewerbungsassistenten blitzschnell professionelle Unterlagen – DSGVO-konform, sicher und individuell auf dich zugeschnitten.</p>
   </div>
@@ -217,25 +241,31 @@
     <div class="service-card fade-in">
       <h3>CV-Analyse</h3>
       <p class="price">7,99 €</p>
-      <p class="detail">Individuelles Feedback</p>
-      <p class="detail">KI + Experten geprüft</p>
-      <p class="detail">Schnelle Analyse</p>
+      <ul class="service-list">
+        <li><i data-lucide="check"></i>Individuelles Feedback</li>
+        <li><i data-lucide="check"></i>KI + Experten geprüft</li>
+        <li><i data-lucide="check"></i>Schnelle Analyse</li>
+      </ul>
       <a href="formular.html">CV hochladen</a>
     </div>
     <div class="service-card fade-in">
       <h3>Professionelles Anschreiben</h3>
       <p class="price">7,99 €</p>
-      <p class="detail">Maßgeschneiderter Text</p>
-      <p class="detail">In 60 Sekunden fertig</p>
-      <p class="detail">Passend auf die Stelle</p>
+      <ul class="service-list">
+        <li><i data-lucide="check"></i>Maßgeschneiderter Text</li>
+        <li><i data-lucide="check"></i>In 60 Sekunden fertig</li>
+        <li><i data-lucide="check"></i>Passend auf die Stelle</li>
+      </ul>
       <a href="formular.html">Anschreiben generieren</a>
     </div>
     <div class="service-card fade-in">
       <h3>Bewerbungspaket</h3>
       <p class="price">12,99 €</p>
-      <p class="detail">Lebenslauf & Anschreiben</p>
-      <p class="detail">Rundum-Optimierung</p>
-      <p class="detail">Erfolgschancen steigern</p>
+      <ul class="service-list">
+        <li><i data-lucide="check"></i>Lebenslauf & Anschreiben</li>
+        <li><i data-lucide="check"></i>Rundum-Optimierung</li>
+        <li><i data-lucide="check"></i>Erfolgschancen steigern</li>
+      </ul>
       <a href="formular.html">Paket wählen</a>
     </div>
   </div>
@@ -243,19 +273,19 @@
   <!-- Features -->
   <section class="features fade-in">
     <div class="features-grid">
-      <div>
+      <div class="feature-item">
         <i data-lucide="shield-check" class="feature-icon"></i>
         <div class="feature-text">DSGVO-konform</div>
       </div>
-      <div>
+      <div class="feature-item">
         <i data-lucide="lock" class="feature-icon"></i>
         <div class="feature-text">Keine Datenweitergabe</div>
       </div>
-      <div>
+      <div class="feature-item">
         <i data-lucide="message-circle" class="feature-icon"></i>
         <div class="feature-text">Persönliches Feedback</div>
       </div>
-      <div>
+      <div class="feature-item">
         <i data-lucide="file-check" class="feature-icon"></i>
         <div class="feature-text">Individuelle Ergebnisse</div>
       </div>
@@ -263,7 +293,7 @@
   </section>
 
   <script>
-    // Sticky Navbar verkleinern
+    // Sticky Navbar
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
       if (window.scrollY > 50) {
@@ -282,9 +312,7 @@
         }
       });
     }, { threshold: 0.1 });
-    faders.forEach(fade => {
-      observer.observe(fade);
-    });
+    faders.forEach(fade => observer.observe(fade));
     // Icons laden
     lucide.createIcons();
   </script>
