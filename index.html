@@ -169,13 +169,13 @@
       transform: translateY(-6px);
       box-shadow: 0 8px 24px rgba(0,0,0,0.1);
     }
-    .icon-card img {
+    .icon-card svg {
       width: 50px;
       height: 50px;
       margin-bottom: 10px;
       transition: transform 0.3s ease;
     }
-    .icon-card:hover img {
+    .icon-card:hover svg {
       transform: scale(1.1);
     }
     /* Fade-in */
@@ -255,19 +255,31 @@
   <section class="features-section fade-in">
     <div class="icon-grid">
       <div class="icon-card">
-        <img src="icons/dsgvo.svg" alt="DSGVO-konform">
+        <svg fill="none" stroke="#1E40AF" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M12 2L2 7v7c0 5 5 9 10 9s10-4 10-9V7l-10-5z"/>
+          <path d="M9 12l2 2l4-4"/>
+        </svg>
         <h3>DSGVO-konform</h3>
       </div>
       <div class="icon-card">
-        <img src="icons/no-data-sharing.svg" alt="Keine Datenweitergabe">
+        <svg fill="none" stroke="#1E40AF" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M3 3l18 18M8 8h8v8H8z"/>
+        </svg>
         <h3>Keine Datenweitergabe</h3>
       </div>
       <div class="icon-card">
-        <img src="icons/feedback.svg" alt="Persönliches Feedback">
+        <svg fill="none" stroke="#1E40AF" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M12 20h9"/>
+          <path d="M12 4h9"/>
+          <path d="M4 9h16v6H4z"/>
+        </svg>
         <h3>Persönliches Feedback</h3>
       </div>
       <div class="icon-card">
-        <img src="icons/custom-results.svg" alt="Individuelle Ergebnisse">
+        <svg fill="none" stroke="#1E40AF" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M4 4h16v16H4z"/>
+          <path d="M4 9h16"/>
+        </svg>
         <h3>Individuelle Ergebnisse</h3>
       </div>
     </div>
