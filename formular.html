@@ -5,140 +5,50 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bewerbungsformular – Bewerbungsassistent</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet" />
+  <!-- reCAPTCHA v2 -->
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   <style>
-    body {
-      background: #fafafa;
-      font-family: 'Inter', sans-serif;
-      color: #18181B;
-      margin: 0;
-      padding: 0;
-    }
-    /* Sticky-Navbar (neu) */
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: #fff;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-      width: 100%;
-      max-width: 1200px;
-      padding: 15px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 0 auto;
-    }
-    nav a {
-      color: #18181B;
-      font-weight: 600;
-      font-size: 1.05rem;
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-    nav a:hover {
-      color: #1E40AF;
-    }
-    nav img {
-      max-height: 50px;
-      border-radius: 6px;
-      /* Falls du wieder den schwarzen Rahmen möchtest:
-         border: 1px solid #000; padding: 3px; background:#fff; */
-    }
-    .form-wrapper {
-      display: flex;
-      justify-content: center;
-      padding: 40px 20px;
-    }
-    form {
-      background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 4px 20px rgba(24,24,27,0.1);
-      max-width: 500px;
-      width: 100%;
-      padding: 30px;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      transition: box-shadow 0.2s ease, transform 0.2s ease;
-    }
-    form:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 28px rgba(24,24,27,0.15);
-    }
-    label {
-      font-weight: 600;
-      font-size: 0.95rem;
-    }
-    input, textarea {
-      width: 100%;
-      padding: 10px;
-      border: 1.5px solid #e2e7ef;
-      border-radius: 7px;
-      font-size: 1rem;
-      background: #fafafa;
-      box-sizing: border-box;
-    }
-    textarea {
-      resize: vertical;
-      min-height: 34px;
-    }
-    button {
-      margin-top: 10px;
-      background: #1E40AF;
-      color: #fff;
-      padding: 12px 0;
-      font-size: 1.1rem;
-      font-weight: 700;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-    button:hover {
-      background: #153380;
-    }
-    .g-recaptcha {
-      margin-top: 10px;
-    }
-    /* Honeypot verstecken */
-    .hidden-field {
-      position: absolute;
-      left: -9999px;
-      top: -9999px;
-      height: 0;
-      width: 0;
-      overflow: hidden;
-      visibility: hidden;
-    }
-    @media (max-width: 600px) {
-      form {
-        padding: 20px;
-      }
-    }
+    body { background:#fafafa; font-family:'Inter',sans-serif; color:#18181B; margin:0; }
+    /* Sticky Navbar (wie auf der Landingpage) */
+    nav { position:sticky; top:0; z-index:100; background:#fff; box-shadow:0 2px 6px rgba(0,0,0,.05);
+          width:100%; max-width:1200px; padding:15px 20px; display:flex; justify-content:space-between; align-items:center; margin:0 auto; }
+    nav a { color:#18181B; font-weight:600; font-size:1.05rem; text-decoration:none; transition:color .3s; margin:0 10px; }
+    nav a:hover { color:#1E40AF; }
+    nav img { max-height:50px; border-radius:6px; border:1px solid #000; padding:3px; background:#fff; } /* schwarzer Rahmen */
+    .form-wrapper { display:flex; justify-content:center; padding:40px 20px; }
+    form { background:#fff; border-radius:16px; box-shadow:0 4px 20px rgba(24,24,27,0.1); max-width:500px; width:100%;
+           padding:30px; display:flex; flex-direction:column; gap:15px; transition:box-shadow .2s, transform .2s; }
+    form:hover { transform:translateY(-3px); box-shadow:0 6px 28px rgba(24,24,27,.15); }
+    label { font-weight:600; font-size:.95rem; }
+    input, textarea { width:100%; padding:10px; border:1.5px solid #e2e7ef; border-radius:7px; font-size:1rem; background:#fafafa; box-sizing:border-box; }
+    textarea { resize:vertical; min-height:34px; }
+    button { margin-top:10px; background:#1E40AF; color:#fff; padding:12px 0; font-size:1.1rem; font-weight:700; border:none; border-radius:8px; cursor:pointer; transition:background .3s; }
+    button:hover { background:#153380; }
+    .g-recaptcha { margin-top:10px; }
+    /* Honeypot */
+    .hidden-field { position:absolute; left:-9999px; top:-9999px; height:0; width:0; overflow:hidden; visibility:hidden; }
+    @media (max-width:600px){ form{ padding:20px; } }
   </style>
 </head>
 <body>
-  <!-- Navigation (sticky) -->
+  <!-- Navigation -->
   <nav>
-    <div style="display: flex; gap: 30px;">
+    <div style="display:flex; gap:30px;">
       <a href="index.html">Home</a>
       <a href="impressum.html">Impressum</a>
       <a href="datenschutz.html">Datenschutz</a>
     </div>
-    <div>
-      <img src="ChatGPT Image 23. Juli 2025, 17_13_20_.png" alt="Logo">
-    </div>
+    <div><img src="ChatGPT Image 23. Juli 2025, 17_13_20_.png" alt="Logo"></div>
   </nav>
 
   <!-- Formular -->
   <div class="form-wrapper">
-    <form 
+    <form
       method="POST"
-      action="https://formspree.io/f/YOUR_FORMSPREE_ID"
+      action="https://DEINE-N8N-URL/webhook/bewerbung"  <!-- <-- HIER deine n8n-Production-URL einsetzen -->
       enctype="multipart/form-data"
     >
-      <!-- Honeypot -->
+      <!-- Honeypot gegen Bots -->
       <input type="text" name="_gotcha" class="hidden-field" tabindex="-1" autocomplete="off">
 
       <h2 style="text-align:center;font-weight:900;margin-bottom:5px;">Bewerbungsformular</h2>
@@ -178,11 +88,22 @@
       <textarea id="volunteering" name="cv.volunteering" placeholder="Organisation – Rolle"></textarea>
 
       <!-- reCAPTCHA -->
-      <div class="g-recaptcha" data-sitekey="YOUR_RECAPTCHA_SITE_KEY"></div>
+      <div class="g-recaptcha" data-sitekey="DEIN_RECAPTCHA_SITE_KEY"></div>
+
+      <!-- Service als Hidden-Feld (wird aus der URL übernommen) -->
+      <input type="hidden" name="service" id="service">
 
       <!-- Absenden -->
       <button type="submit">Absenden</button>
     </form>
   </div>
+
+  <script>
+    // Service-Parameter (z. B. ?service=cv-analyse) ins Hidden-Feld übernehmen
+    (function(){
+      const svc = new URLSearchParams(location.search).get('service') || 'cv-analyse';
+      document.getElementById('service').value = svc.toLowerCase();
+    })();
+  </script>
 </body>
 </html>
