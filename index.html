@@ -3,10 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Bewerbungsassistent – Schnelle, KI-gestützte Bewerbungsunterlagen in 60 Sekunden." />
-  <title>Bewerbungsassistent – Bewerben Mit KI In 60 Sekunden</title>
+  <title>Bewerbungsassistent</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet" />
-  <script src="https://unpkg.com/lucide@latest"></script>
   <style>
     body {
       font-family: 'Inter', sans-serif;
@@ -52,47 +50,44 @@
       border-radius: 6px;
       border: 1px solid #000; /* schwarzer Rahmen */
       padding: 3px;
-      background-color: white; /* falls PNG transparent ist */
+      background-color: white;
     }
     /* Intro */
     .intro {
+      padding: 80px 20px;
       text-align: center;
-      max-width: 700px;
-      margin: 60px auto 40px;
-      padding: 0 20px;
+      background: linear-gradient(to bottom, #fff, #f9fafb);
+      position: relative;
     }
     .intro h1 {
-      font-weight: 900;
       font-size: 2.5rem;
-      margin-bottom: 15px;
+      font-weight: 900;
+      margin-bottom: 20px;
     }
     .intro p {
-      color: #555;
-      font-size: 1.1rem;
-      line-height: 1.5;
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: auto;
     }
-    /* Service Header */
-    .service-header {
+    /* Services */
+    .services-header {
       text-align: center;
-      margin-bottom: 40px;
+      padding: 40px 20px 10px;
     }
-    .service-header h2 {
+    .services-header h2 {
       font-size: 2rem;
       font-weight: 900;
       margin-bottom: 10px;
     }
-    .service-header p {
-      font-size: 1.2rem;
-      color: #9e9ea7;
-      font-weight: 700;
+    .services-header p {
+      color: #4B5563;
     }
-    /* Service Cards */
-    .service-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 30px;
+    .services-grid {
       max-width: 1200px;
-      margin: auto;
+      margin: 20px auto 80px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
       padding: 0 20px;
     }
     .service-card {
@@ -101,41 +96,42 @@
       box-shadow: 0 4px 20px rgba(24,24,27,0.1);
       padding: 30px;
       text-align: center;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transition: all 0.3s ease;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
     }
     .service-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 32px rgba(24,24,27,0.15);
+      transform: translateY(-8px);
+      box-shadow: 0 12px 32px rgba(24,24,27,0.18);
     }
     .service-card h3 {
-      font-size: 1.6rem;
-      font-weight: 700;
-      margin-bottom: 5px;
+      font-size: 1.5rem;
+      font-weight: 900;
+      margin-bottom: 10px;
     }
-    .service-card p.price {
+    .price {
       font-size: 1.3rem;
       font-weight: 700;
       color: #1E40AF;
       margin-bottom: 15px;
     }
-    .service-list {
-      list-style: none;
-      padding: 0;
-      margin: 0 0 20px 0;
+    .features {
+      margin-bottom: 15px;
     }
-    .service-list li {
-      font-size: 1rem;
-      color: #555;
-      margin-bottom: 6px;
+    .features p {
+      margin: 6px 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 6px;
+    }
+    .features p::before {
+      content: "✔";
+      color: #1E40AF;
     }
     .service-card a {
+      display: inline-block;
       background: linear-gradient(90deg, #1E40AF, #153380);
       color: #fff;
       padding: 12px 24px;
@@ -146,48 +142,32 @@
       transition: background-position 0.3s ease;
       background-size: 200% 100%;
       background-position: left;
-      display: inline-block;
     }
     .service-card a:hover {
       background-position: right;
     }
-    /* Features */
-    .features {
+    /* Feature Icons */
+    .features-section {
       background: #f3f4f6;
       padding: 60px 20px;
-      margin-top: 60px;
     }
-    .features-grid {
+    .icon-grid {
       max-width: 1000px;
       margin: auto;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 30px;
       text-align: center;
     }
-    .feature-item {
+    .icon-card {
       background: white;
-      border-radius: 12px;
       padding: 20px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border-radius: 12px;
+      transition: all 0.3s ease;
     }
-    .feature-item:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 6px 20px rgba(24,24,27,0.15);
-    }
-    .feature-icon {
-      width: 40px;
-      height: 40px;
-      color: #1E40AF;
-      margin-bottom: 10px;
-      transition: color 0.3s ease;
-    }
-    .feature-item:hover .feature-icon {
-      color: #153380;
-    }
-    .feature-text {
-      font-weight: 600;
-      font-size: 1rem;
+    .icon-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
     }
     /* Fade-in */
     .fade-in {
@@ -198,14 +178,6 @@
     .fade-in.show {
       opacity: 1;
       transform: translateY(0);
-    }
-    @media (max-width: 768px) {
-      .intro h1 {
-        font-size: 2rem;
-      }
-      .service-header h2 {
-        font-size: 1.8rem;
-      }
     }
   </style>
 </head>
@@ -225,69 +197,65 @@
   </nav>
 
   <!-- Intro -->
-  <div class="intro fade-in">
+  <section class="intro fade-in">
     <h1>Deine Bewerbung in 60 Sekunden</h1>
     <p>Erstelle mit unserem KI-gestützten Bewerbungsassistenten blitzschnell professionelle Unterlagen – DSGVO-konform, sicher und individuell auf dich zugeschnitten.</p>
-  </div>
+  </section>
 
-  <!-- Service Header -->
-  <div class="service-header fade-in">
+  <!-- Services Header -->
+  <div class="services-header fade-in">
     <h2>Wähle deinen Service</h2>
     <p>Direkt starten – keine Registrierung</p>
   </div>
 
-  <!-- Service Cards -->
-  <div class="service-grid">
-    <div class="service-card fade-in">
+  <!-- Services -->
+  <div class="services-grid fade-in">
+    <div class="service-card">
       <h3>CV-Analyse</h3>
-      <p class="price">7,99 €</p>
-      <ul class="service-list">
-        <li><i data-lucide="check"></i>Individuelles Feedback</li>
-        <li><i data-lucide="check"></i>KI + Experten geprüft</li>
-        <li><i data-lucide="check"></i>Schnelle Analyse</li>
-      </ul>
+      <div class="price">29 €</div>
+      <div class="features">
+        <p>Individuelles Feedback</p>
+        <p>KI + Experten geprüft</p>
+        <p>Schnelle Analyse</p>
+      </div>
       <a href="formular.html">CV hochladen</a>
     </div>
-    <div class="service-card fade-in">
+    <div class="service-card">
       <h3>Professionelles Anschreiben</h3>
-      <p class="price">7,99 €</p>
-      <ul class="service-list">
-        <li><i data-lucide="check"></i>Maßgeschneiderter Text</li>
-        <li><i data-lucide="check"></i>In 60 Sekunden fertig</li>
-        <li><i data-lucide="check"></i>Passend auf die Stelle</li>
-      </ul>
+      <div class="price">39 €</div>
+      <div class="features">
+        <p>Individuelle Erstellung</p>
+        <p>Passend zur Stelle</p>
+        <p>Hochwertige Formulierungen</p>
+      </div>
       <a href="formular.html">Anschreiben generieren</a>
     </div>
-    <div class="service-card fade-in">
+    <div class="service-card">
       <h3>Bewerbungspaket</h3>
-      <p class="price">12,99 €</p>
-      <ul class="service-list">
-        <li><i data-lucide="check"></i>Lebenslauf & Anschreiben</li>
-        <li><i data-lucide="check"></i>Rundum-Optimierung</li>
-        <li><i data-lucide="check"></i>Erfolgschancen steigern</li>
-      </ul>
+      <div class="price">59 €</div>
+      <div class="features">
+        <p>CV + Anschreiben</p>
+        <p>Perfekt aufeinander abgestimmt</p>
+        <p>Bestes Preis-Leistungs-Verhältnis</p>
+      </div>
       <a href="formular.html">Paket wählen</a>
     </div>
   </div>
 
-  <!-- Features -->
-  <section class="features fade-in">
-    <div class="features-grid">
-      <div class="feature-item">
-        <i data-lucide="shield-check" class="feature-icon"></i>
-        <div class="feature-text">DSGVO-konform</div>
+  <!-- Feature Icons -->
+  <section class="features-section fade-in">
+    <div class="icon-grid">
+      <div class="icon-card">
+        <h3>DSGVO-konform</h3>
       </div>
-      <div class="feature-item">
-        <i data-lucide="lock" class="feature-icon"></i>
-        <div class="feature-text">Keine Datenweitergabe</div>
+      <div class="icon-card">
+        <h3>Keine Datenweitergabe</h3>
       </div>
-      <div class="feature-item">
-        <i data-lucide="message-circle" class="feature-icon"></i>
-        <div class="feature-text">Persönliches Feedback</div>
+      <div class="icon-card">
+        <h3>Persönliches Feedback</h3>
       </div>
-      <div class="feature-item">
-        <i data-lucide="file-check" class="feature-icon"></i>
-        <div class="feature-text">Individuelle Ergebnisse</div>
+      <div class="icon-card">
+        <h3>Individuelle Ergebnisse</h3>
       </div>
     </div>
   </section>
@@ -296,12 +264,9 @@
     // Sticky Navbar
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
-      if (window.scrollY > 50) {
-        navbar.classList.add('shrink');
-      } else {
-        navbar.classList.remove('shrink');
-      }
+      navbar.classList.toggle('shrink', window.scrollY > 50);
     });
+
     // Fade-In Animation
     const faders = document.querySelectorAll('.fade-in');
     const observer = new IntersectionObserver(entries => {
@@ -312,9 +277,8 @@
         }
       });
     }, { threshold: 0.1 });
-    faders.forEach(fade => observer.observe(fade));
-    // Icons laden
-    lucide.createIcons();
+
+    faders.forEach(fader => observer.observe(fader));
   </script>
 </body>
 </html>
