@@ -1,0 +1,137 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Bewerbungsassistent – Schnelle, KI-gestützte Bewerbungsunterlagen in 60 Sekunden.">
+  <meta name="keywords" content="Bewerbung, Lebenslauf, Anschreiben, KI, Job">
+  <title>Bewerbungsassistent – Bewerben Mit KI In 60 Sekunden</title>
+  <!-- Google Fonts für Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+<div style="width: 100%; max-width: 1440px; min-height: 100vh; background: #fafafa; font-family: 'Inter', sans-serif; color: #18181B; padding: 20px 0 40px; box-sizing: border-box; margin: 0 auto; display: flex; flex-direction: column; align-items: center;">
+  <!-- Navigation -->
+  <nav style="width: 100%; max-width: 1200px; padding: 20px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <!-- Platz für Logo -->
+      <img src="logo.png" alt="Bewerbungsassistent Logo" style="max-height: 60px; display: block;">
+    </div>
+    <div style="display: flex; gap: 30px;">
+      <a href="/" style="color: #18181B; font-weight: 600; font-size: 1.1rem; text-decoration: none; transition: color 0.3s;">Home</a>
+      <a href="/impressum" style="color: #18181B; font-weight: 600; font-size: 1.1rem; text-decoration: none; transition: color 0.3s;">Impressum</a>
+      <a href="/datenschutz" style="color: #18181B; font-weight: 600; font-size: 1.1rem; text-decoration: none; transition: color 0.3s;">Datenschutz</a>
+    </div>
+  </nav>
+
+  <!-- Hauptbereich -->
+  <main style="flex: 1; width: 100%; max-width: 1200px; padding: 40px 20px; display: flex; flex-direction: column; align-items: center;">
+    <h1 style="font-size: 2.5rem; color: #18181B; font-weight: 900; letter-spacing: -1px; margin-bottom: 40px; text-align: center; line-height: 1.2;">
+      Wähle deinen Service
+    </h1>
+    <p style="font-size: 1.2rem; color: #9e9ea7; font-weight: 700; text-align: center; margin-bottom: 60px;">Direkt starten – keine Registrierung</p>
+    <!-- Service-Optionen -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; width: 100%; max-width: 1200px;">
+      <!-- CV-Analyse -->
+      <div style="background: #fff; border-radius: 16px; box-shadow: 0 4px 20px rgba(24,24,27,0.1); padding: 30px; text-align: center; transition: transform 0.2s;">
+        <h2 style="font-size: 1.6rem; font-weight: 700; color: #18181B; margin-bottom: 15px;">CV-Analyse</h2>
+        <p style="font-size: 1.4rem; font-weight: 700; color: #18181B; margin-bottom: 15px;">7,99 €</p>
+        <p style="font-size: 1rem; color: #9e9ea7; margin-bottom: 10px;">Individuelles Feedback</p>
+        <p style="font-size: 1rem; color: #9e9ea7; margin-bottom: 10px;">KI + Experten geprüft</p>
+        <p style="font-size: 1rem; color: #9e9ea7; margin-bottom: 20px;">Schnelle Analyse</p>
+        <a href="/cv-analyse" style="display: inline-block; background: #1E40AF; color: #fff; padding: 12px 24px; font-size: 1.1rem; font-weight: 700; border-radius: 8px; text-decoration: none; transition: background 0.3s;">CV hochladen</a>
+      </div>
+      <!-- Professionelles Anschreiben -->
+      <div style="background: #fff; border-radius: 16px; box-shadow: 0 4px 20px rgba(24,24,27,0.1); padding: 30px; text-align: center; transition: transform 0.2s;">
+        <h2 style="font-size: 1.6rem; font-weight: 700; color: #18181B; margin-bottom: 15px;">Professionelles Anschreiben</h2>
+        <p style="font-size: 1.4rem; font-weight: 700; color: #18181B; margin-bottom: 15px;">7,99 €</p>
+        <p style="font-size: 1rem; color: #9e9ea7; margin-bottom: 10px;">Maßgeschneiderter Text</p>
+        <p style="font-size: 1rem; color: #9e9ea7; margin-bottom: 10px;">In 60 Sekunden fertig</p>
+        <p style="font-size: 1rem; color: #9e9ea7; margin-bottom: 20px;">Passend auf die Stelle</p>
+        <a href="/anschreiben" style="display: inline-block; background: #1E40AF; color: #fff; padding: 12px 24px; font-size: 1.1rem; font-weight: 700; border-radius: 8px; text-decoration: none; transition: background 0.3s;">Anschreiben generieren</a>
+      </div>
+      <!-- Bewerbungspaket -->
+      <div style="background: #fff; border-radius: 16px; box-shadow: 0 4px 20px rgba(24,24,27,0.1); padding: 30px; text-align: center; transition: transform 0.2s;">
+        <h2 style="font-size: 1.6rem; font-weight: 700; color: #18181B; margin-bottom: 15px;">Bewerbungspaket</h2>
+        <p style="font-size: 1.4rem; font-weight: 700; color: #18181B; margin-bottom: 15px;">12,99 €</p>
+        <p style="font-size: 1rem; color: #9e9ea7; margin-bottom: 10px;">Lebenslauf & Anschreiben</p>
+        <p style="font-size: 1rem; color: #9e9ea7; margin-bottom: 10px;">Rundum-Optimierung</p>
+        <p style="font-size: 1rem; color: #9e9ea7; margin-bottom: 20px;">Erfolgschancen steigern</p>
+        <a href="/bewerbungspaket" style="display: inline-block; background: #1E40AF; color: #fff; padding: 12px 24px; font-size: 1.1rem; font-weight: 700; border-radius: 8px; text-decoration: none; transition: background 0.3s;">Paket wählen</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- FAQ-Bereich -->
+  <section style="max-width: 1200px; margin: 60px auto 0; padding: 0 20px; display: flex; flex-direction: column; align-items: center;">
+    <h2 style="font-size: 2rem; font-weight: 900; color: #18181B; text-align: center; margin-bottom: 40px;">Individuelle Ergebnisse</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; width: 100%; max-width: 1000px;">
+      <div>
+        <h3 style="font-size: 1.3rem; font-weight: 600; color: #18181B; margin-bottom: 10px;">Sind meine Daten sicher?</h3>
+        <p style="font-size: 1rem; color: #9e9ea7;">Ja, deine Daten werden ausschließlich zur Erstellung deiner Unterlagen verwendet und danach gelöscht.</p>
+      </div>
+      <div>
+        <h3 style="font-size: 1.3rem; font-weight: 600; color: #18181B; margin-bottom: 10px;">Wie erhalte ich mein Feedback?</h3>
+        <p style="font-size: 1rem; color: #9e9ea7;">Du erhältst das Ergebnis per E-Mail – klar, verständlich und individuell erstellt.</p>
+      </div>
+      <div>
+        <h3 style="font-size: 1.3rem; font-weight: 600; color: #18181B; margin-bottom: 10px;">Welche Zahlungsmöglichkeiten gibt es?</h3>
+        <p style="font-size: 1rem; color: #9e9ea7;">Die Bezahlung erfolgt unkompliziert per Kreditkarte oder PayPal.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer style="width: 100%; max-width: 1200px; margin-top: 60px; padding: 20px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #e2e7ef;">
+    <div style="display: flex; gap: 30px;">
+      <a href="/impressum" style="color: #18181B; font-size: 1rem; text-decoration: none;">Impressum</a>
+      <a href="/datenschutz" style="color: #18181B; font-size: 1rem; text-decoration: none;">Datenschutz</a>
+      <a href="/agb" style="color: #18181B; font-size: 1rem; text-decoration: none;">AGB</a>
+    </div>
+    <div style="display: flex; gap: 30px;">
+      <a href="https://linkedin.com" style="color: #18181B; font-size: 1rem; text-decoration: none;">LinkedIn</a>
+      <a href="https://instagram.com" style="color: #18181B; font-size: 1rem; text-decoration: none;">Instagram</a>
+    </div>
+  </footer>
+</div>
+</body>
+</html>
