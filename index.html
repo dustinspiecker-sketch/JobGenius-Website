@@ -169,6 +169,15 @@
       transform: translateY(-6px);
       box-shadow: 0 8px 24px rgba(0,0,0,0.1);
     }
+    .icon-card img {
+      width: 50px;
+      height: 50px;
+      margin-bottom: 10px;
+      transition: transform 0.3s ease;
+    }
+    .icon-card:hover img {
+      transform: scale(1.1);
+    }
     /* Fade-in */
     .fade-in {
       opacity: 0;
@@ -246,15 +255,19 @@
   <section class="features-section fade-in">
     <div class="icon-grid">
       <div class="icon-card">
+        <img src="icons/dsgvo.svg" alt="DSGVO-konform">
         <h3>DSGVO-konform</h3>
       </div>
       <div class="icon-card">
+        <img src="icons/no-data-sharing.svg" alt="Keine Datenweitergabe">
         <h3>Keine Datenweitergabe</h3>
       </div>
       <div class="icon-card">
+        <img src="icons/feedback.svg" alt="Persönliches Feedback">
         <h3>Persönliches Feedback</h3>
       </div>
       <div class="icon-card">
+        <img src="icons/custom-results.svg" alt="Individuelle Ergebnisse">
         <h3>Individuelle Ergebnisse</h3>
       </div>
     </div>
