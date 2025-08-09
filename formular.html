@@ -3,43 +3,37 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bewerbungsassistent – Formular</title>
+  <title>Bewerbungsformular – Bewerbungsassistent</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet" />
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   <style>
     body {
-      font-family: 'Inter', sans-serif;
-      margin: 0;
       background: #fafafa;
+      font-family: 'Inter', sans-serif;
       color: #18181B;
-      scroll-behavior: smooth;
+      margin: 0;
+      padding: 0;
     }
-    /* Navbar */
+    /* Sticky-Navbar (neu) */
     nav {
       position: sticky;
       top: 0;
-      background: white;
       z-index: 100;
-      transition: all 0.3s ease;
+      background: #fff;
       box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-    }
-    nav.shrink {
-      padding: 8px 0;
-    }
-    nav .container {
+      width: 100%;
       max-width: 1200px;
-      margin: auto;
       padding: 15px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      transition: padding 0.3s ease;
+      margin: 0 auto;
     }
     nav a {
       color: #18181B;
       font-weight: 600;
       font-size: 1.05rem;
       text-decoration: none;
-      margin: 0 10px;
       transition: color 0.3s ease;
     }
     nav a:hover {
@@ -48,132 +42,147 @@
     nav img {
       max-height: 50px;
       border-radius: 6px;
-      border: 1px solid #000; /* schwarzer Rahmen */
-      padding: 3px;
-      background-color: white;
+      /* Falls du wieder den schwarzen Rahmen möchtest:
+         border: 1px solid #000; padding: 3px; background:#fff; */
     }
-    /* Fade-in */
-    .fade-in {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.6s ease-out;
+    .form-wrapper {
+      display: flex;
+      justify-content: center;
+      padding: 40px 20px;
     }
-    .fade-in.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    /* Formular Container */
-    .form-container {
-      max-width: 800px;
-      margin: 50px auto;
+    form {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(24,24,27,0.1);
+      max-width: 500px;
+      width: 100%;
       padding: 30px;
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      transition: box-shadow 0.2s ease, transform 0.2s ease;
     }
-    .form-container h1 {
-      text-align: center;
-      margin-bottom: 20px;
-      font-size: 2rem;
-      font-weight: 900;
+    form:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 28px rgba(24,24,27,0.15);
     }
-    form label {
+    label {
       font-weight: 600;
-      margin-top: 15px;
-      display: block;
+      font-size: 0.95rem;
     }
-    form input, form textarea, form select {
+    input, textarea {
       width: 100%;
       padding: 10px;
-      margin-top: 5px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
+      border: 1.5px solid #e2e7ef;
+      border-radius: 7px;
       font-size: 1rem;
-      font-family: 'Inter', sans-serif;
+      background: #fafafa;
+      box-sizing: border-box;
     }
-    form button {
-      margin-top: 20px;
-      background: linear-gradient(90deg, #1E40AF, #153380);
-      color: white;
-      border: none;
-      padding: 12px 20px;
+    textarea {
+      resize: vertical;
+      min-height: 34px;
+    }
+    button {
+      margin-top: 10px;
+      background: #1E40AF;
+      color: #fff;
+      padding: 12px 0;
       font-size: 1.1rem;
       font-weight: 700;
+      border: none;
       border-radius: 8px;
       cursor: pointer;
-      transition: background-position 0.3s ease;
-      background-size: 200% 100%;
-      background-position: left;
+      transition: background 0.3s ease;
     }
-    form button:hover {
-      background-position: right;
+    button:hover {
+      background: #153380;
+    }
+    .g-recaptcha {
+      margin-top: 10px;
+    }
+    /* Honeypot verstecken */
+    .hidden-field {
+      position: absolute;
+      left: -9999px;
+      top: -9999px;
+      height: 0;
+      width: 0;
+      overflow: hidden;
+      visibility: hidden;
+    }
+    @media (max-width: 600px) {
+      form {
+        padding: 20px;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- Navbar -->
-  <nav id="navbar">
-    <div class="container">
-      <div>
-        <a href="index.html">Home</a>
-        <a href="impressum.html">Impressum</a>
-        <a href="datenschutz.html">Datenschutz</a>
-      </div>
-      <div>
-        <img src="ChatGPT Image 23. Juli 2025, 17_13_20_.png" alt="Logo">
-      </div>
+  <!-- Navigation (sticky) -->
+  <nav>
+    <div style="display: flex; gap: 30px;">
+      <a href="index.html">Home</a>
+      <a href="impressum.html">Impressum</a>
+      <a href="datenschutz.html">Datenschutz</a>
+    </div>
+    <div>
+      <img src="ChatGPT Image 23. Juli 2025, 17_13_20_.png" alt="Logo">
     </div>
   </nav>
 
   <!-- Formular -->
-  <div class="form-container fade-in">
-    <h1>Formular</h1>
-    <form action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST" enctype="multipart/form-data">
-      <label for="name">Name</label>
-      <input type="text" id="name" name="name" required>
+  <div class="form-wrapper">
+    <form 
+      method="POST"
+      action="https://formspree.io/f/YOUR_FORMSPREE_ID"
+      enctype="multipart/form-data"
+    >
+      <!-- Honeypot -->
+      <input type="text" name="_gotcha" class="hidden-field" tabindex="-1" autocomplete="off">
 
-      <label for="email">E-Mail-Adresse</label>
-      <input type="email" id="email" name="_replyto" required>
+      <h2 style="text-align:center;font-weight:900;margin-bottom:5px;">Bewerbungsformular</h2>
+      <p style="text-align:center;color:#9e9ea7;font-weight:700;margin-bottom:15px;">Mit KI – schnell, klar, erfolgreich</p>
 
-      <label for="service">Service auswählen</label>
-      <select id="service" name="service" required>
-        <option value="">Bitte auswählen</option>
-        <option value="CV-Analyse">CV-Analyse</option>
-        <option value="Anschreiben">Professionelles Anschreiben</option>
-        <option value="Paket">Bewerbungspaket</option>
-      </select>
+      <label for="firstName">Vorname</label>
+      <input type="text" id="firstName" name="customer.firstName" required>
 
-      <label for="message">Zusätzliche Informationen</label>
-      <textarea id="message" name="message" rows="4"></textarea>
+      <label for="lastName">Nachname</label>
+      <input type="text" id="lastName" name="customer.lastName" required>
 
-      <label for="file">Datei hochladen</label>
-      <input type="file" id="file" name="file" accept=".pdf,.doc,.docx" required>
+      <label for="address">Adresse</label>
+      <input type="text" id="address" name="customer.address" required>
 
+      <label for="email">E-Mail</label>
+      <input type="email" id="email" name="customer.email" required>
+
+      <label for="phone">Telefon</label>
+      <input type="tel" id="phone" name="customer.phone" required>
+
+      <label for="cvFile">Lebenslauf hochladen (PDF/DOCX)</label>
+      <input type="file" id="cvFile" name="files.cvFile" accept=".pdf,.doc,.docx" required>
+
+      <label for="skills">Fähigkeiten (Skills)</label>
+      <textarea id="skills" name="cv.skills" placeholder="z. B. Excel, Python, Projektmanagement"></textarea>
+
+      <label for="softskills">Softskills</label>
+      <textarea id="softskills" name="cv.softskills" placeholder="z. B. Teamfähigkeit, Kommunikationsstärke"></textarea>
+
+      <label for="languages">Sprachen</label>
+      <textarea id="languages" name="cv.languages" placeholder="Deutsch – C2&#10;Englisch – C1"></textarea>
+
+      <label for="certificates">Zertifikate (optional)</label>
+      <textarea id="certificates" name="cv.certificates" placeholder="Zertifikat – Aussteller – Jahr"></textarea>
+
+      <label for="volunteering">Ehrenamt/Engagement (optional)</label>
+      <textarea id="volunteering" name="cv.volunteering" placeholder="Organisation – Rolle"></textarea>
+
+      <!-- reCAPTCHA -->
+      <div class="g-recaptcha" data-sitekey="YOUR_RECAPTCHA_SITE_KEY"></div>
+
+      <!-- Absenden -->
       <button type="submit">Absenden</button>
     </form>
   </div>
-
-  <script>
-    // Sticky Navbar
-    const navbar = document.getElementById('navbar');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 50) {
-        navbar.classList.add('shrink');
-      } else {
-        navbar.classList.remove('shrink');
-      }
-    });
-    // Fade-In Animation
-    const fadeTarget = document.querySelector('.fade-in');
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('show');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-    observer.observe(fadeTarget);
-  </script>
 </body>
 </html>
