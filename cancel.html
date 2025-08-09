@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zahlung abgebrochen – Bewerbungsassistent</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet" />
+  <style>
+    /* Basis (wie index.html) */
+    body { font-family:'Inter',sans-serif; margin:0; background:#fafafa; color:#18181B; }
+    /* Navbar – identisch zu index.html */
+    nav { position:sticky; top:0; background:#fff; z-index:100; transition:all .3s ease; box-shadow:0 2px 6px rgba(0,0,0,.05); }
+    nav.shrink { padding:8px 0; }
+    nav .container { max-width:1200px; margin:auto; padding:15px 20px; display:flex; justify-content:space-between; align-items:center; }
+    nav a { color:#18181B; font-weight:600; font-size:1.05rem; text-decoration:none; margin:0 10px; transition:color .3s; }
+    nav a:hover { color:#1E40AF; }
+    nav img { max-height:50px; border-radius:6px; border:1px solid #000; padding:3px; background:#fff; }
+
+    /* Seite */
+    .wrap { max-width:1000px; margin:0 auto; padding:80px 20px; }
+    .card { background:#fff; border-radius:16px; box-shadow:0 4px 20px rgba(24,24,27,0.1); padding:40px; text-align:center; }
+    h1 { font-size:2.2rem; font-weight:900; margin:0 0 16px; }
+    p.lead { font-size:1.2rem; color:#4B5563; max-width:720px; margin:0 auto 18px; }
+    .cta { margin-top:22px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+    .btn { display:inline-block; padding:12px 24px; border-radius:8px; font-weight:700; text-decoration:none; transition:transform .2s, box-shadow .2s, background-position .3s; }
+    .btn-primary { background:linear-gradient(90deg,#1E40AF,#153380); color:#fff; background-size:200% 100%; background-position:left; }
+    .btn-primary:hover { background-position:right; transform:translateY(-2px); box-shadow:0 10px 24px rgba(0,0,0,.12); }
+    .btn-secondary { background:#f3f4f6; color:#111; border:1px solid #e5e7eb; }
+    .btn-secondary:hover { transform:translateY(-2px); box-shadow:0 10px 24px rgba(0,0,0,.12); }
+
+    /* Dezent trauriges Icon */
+    .sad { width:86px; height:86px; border-radius:50%; border:3px solid #9CA3AF; margin:0 auto 14px; display:grid; place-items:center; }
+    .sad svg { width:50px; height:50px; stroke:#9CA3AF; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+
+    /* Fade-in wie index.html */
+    .fade-in { opacity:0; transform:translateY(20px); transition:all .6s ease-out; }
+    .fade-in.show { opacity:1; transform:translateY(0); }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav id="navbar">
+    <div class="container">
+      <div>
+        <a href="index.html">Home</a>
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+      </div>
+      <div><img src="ChatGPT Image 23. Juli 2025, 17_13_20_.png" alt="Logo"></div>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <div class="card fade-in">
+      <div class="sad" aria-hidden="true">
+        <svg viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M9 10h.01M15 10h.01"/>
+          <path d="M8 16c1.2-1 2.6-1.5 4-1.5s2.8.5 4 1.5"/>
+        </svg>
+      </div>
+      <h1>Zahlung abgebrochen</h1>
+      <p class="lead">Schade – die Zahlung wurde nicht abgeschlossen. Wenn du Unterstützung brauchst, melde dich gern. Du kannst den Vorgang jederzeit erneut starten.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="formular.html">Erneut versuchen</a>
+        <a class="btn btn-secondary" href="index.html">Zur Startseite</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Sticky Navbar
+    const navbar=document.getElementById('navbar');
+    window.addEventListener('scroll',()=>navbar.classList.toggle('shrink',window.scrollY>50));
+    // Fade-in
+    const target=document.querySelector('.card');
+    new IntersectionObserver(([e])=>{ if(e.isIntersecting) target.classList.add('show'); },{threshold:.2}).observe(target);
+  </script>
+</body>
+</html>
