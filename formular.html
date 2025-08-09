@@ -1,139 +1,180 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bewerbungsformular</title>
-  <!-- Google Fonts für Inter -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bewerbungsformular – Bewerbungsassistent</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet" />
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <style>
+    body {
+      background: #fafafa;
+      font-family: 'Inter', sans-serif;
+      color: #18181B;
+      margin: 0;
+      padding: 0;
+    }
+    nav {
+      width: 100%;
+      max-width: 1200px;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 0 auto;
+    }
+    nav a {
+      color: #18181B;
+      font-weight: 600;
+      font-size: 1.05rem;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: #1E40AF;
+    }
+    nav img {
+      max-height: 50px;
+      border-radius: 6px;
+    }
+    .form-wrapper {
+      display: flex;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+    form {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(24,24,27,0.1);
+      max-width: 500px;
+      width: 100%;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      transition: box-shadow 0.2s ease, transform 0.2s ease;
+    }
+    form:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 28px rgba(24,24,27,0.15);
+    }
+    label {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1.5px solid #e2e7ef;
+      border-radius: 7px;
+      font-size: 1rem;
+      background: #fafafa;
+      box-sizing: border-box;
+    }
+    textarea {
+      resize: vertical;
+      min-height: 34px;
+    }
+    button {
+      margin-top: 10px;
+      background: #1E40AF;
+      color: #fff;
+      padding: 12px 0;
+      font-size: 1.1rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background: #153380;
+    }
+    .g-recaptcha {
+      margin-top: 10px;
+    }
+    /* Honeypot verstecken */
+    .hidden-field {
+      position: absolute;
+      left: -9999px;
+      top: -9999px;
+      height: 0;
+      width: 0;
+      overflow: hidden;
+      visibility: hidden;
+    }
+    @media (max-width: 600px) {
+      form {
+        padding: 20px;
+      }
+    }
+  </style>
 </head>
 <body>
-<div style="width: 100%; max-width: 1200px; min-height: 1600px; background: #fafafa; font-family: 'Inter', sans-serif; color: #18181B; padding-bottom: 40px; box-sizing: border-box; margin: 0 auto;">
-  <!-- Headline -->
-  <div style="display: flex; flex-direction: column; align-items: center; padding: 32px 0 8px 0; max-width: 1200px; margin: 0 auto;">
-    <h1 style="font-size: 2rem; color: #18181B; font-weight: 900; letter-spacing: -1px; margin: 0 0 8px 0; text-align: center;">
-      Deine Bewerbung in 60 Sekunden.
-    </h1>
-    <div style="font-size: 1.2rem; color: #9e9ea7; font-weight: 700; text-align: center; margin-bottom: 24px;">
-      Mit KI – schnell, klar, erfolgreich.
+  <!-- Navigation -->
+  <nav>
+    <div style="display: flex; gap: 30px;">
+      <a href="index.html">Home</a>
+      <a href="impressum.html">Impressum</a>
+      <a href="datenschutz.html">Datenschutz</a>
     </div>
-  </div>
+    <div>
+      <img src="ChatGPT Image 23. Juli 2025, 17_13_20_.png" alt="Logo">
+    </div>
+  </nav>
 
-  <!-- Formular Card -->
-  <div style="display: flex; justify-content: center; margin-top: 0; max-width: 1200px; margin-left: auto; margin-right: auto;">
+  <!-- Formular -->
+  <div class="form-wrapper">
     <form 
       method="POST"
       action="https://formspree.io/f/YOUR_FORMSPREE_ID"
       enctype="multipart/form-data"
-      style="
-        background: #fff;
-        border-radius: 18px;
-        box-shadow: 0 2px 32px 0 rgba(24,24,27,0.09);
-        max-width: 440px;
-        width: 100%;
-        padding: 24px 20px 20px 20px;
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        margin-bottom: 30px;
-        box-sizing: border-box;
-      "
     >
-      <div style="font-size: 1.1rem; font-weight: 700; text-align:center; color:#18181B; margin-bottom:12px;">
-        Bewerbungsformular
-      </div>
-      <!-- Persönliche Angaben -->
-      <div>
-        <label for="firstName" style="font-weight: 600; font-size: 0.95rem; display:block;">Vorname</label>
-        <input type="text" id="firstName" name="customer.firstName" required style="width:100%;padding:8px 10px;margin-top:3px;border:1.5px solid #e2e7ef;border-radius:7px;font-size:1rem; background: #fafafa; box-sizing: border-box;" />
-      </div>
-      <div>
-        <label for="lastName" style="font-weight: 600; font-size: 0.95rem; display:block;">Nachname</label>
-        <input type="text" id="lastName" name="customer.lastName" required style="width:100%;padding:8px 10px;margin-top:3px;border:1.5px solid #e2e7ef;border-radius:7px;font-size:1rem; background: #fafafa; box-sizing: border-box;" />
-      </div>
-      <div>
-        <label for="address" style="font-weight: 600; font-size: 0.95rem; display:block;">Adresse</label>
-        <input type take="text" id="address" name="customer.address" required style="width:100%;padding:8px 10px;margin-top:3px;border:1.5px solid #e2e7ef;border-radius:7px;font-size:1rem; background: #fafafa; box-sizing: border-box;" />
-      </div>
-      <div>
-        <label for="email" style="font-weight: 600; font-size: 0.95rem; display:block;">E-Mail</label>
-        <input type="email" id="email" name="customer.email" required style="width:100%;padding:8px 10px;margin-top:3px;border:1.5px solid #e2e7ef;border-radius:7px;font-size:1rem; background: #fafafa; box-sizing: border-box;" />
-      </div>
-      <div>
-        <label for="phone" style="font-weight: 600; font-size: 0.95rem; display:block;">Telefon</label>
-        <input type="tel" id="phone" name="customer.phone" required style="width:100%;padding:8px 10px;margin-top:3px;border:1.5px solid #e2e7ef;border-radius:7px;font-size:1rem; background: #fafafa; box-sizing: border-box;" />
-      </div>
-      <!-- CV-Upload -->
-      <div>
-        <label for="cvFile" style="font-weight: 600; font-size: 0.95rem; display:block;">Lebenslauf hochladen (PDF/DOCX)</label>
-        <input type="file" id="cvFile" name="files.cvFile" accept=".pdf,.doc,.docx" required style="margin-top:3px; width:100%; box-sizing: border-box;" />
-      </div>
-      <!-- Freitextfelder -->
-      <div>
-        <label for="skills" style="font-weight: 600; font-size: 0.95rem; display:block;">Fähigkeiten (Skills)</label>
-        <textarea id="skills" name="cv.skills" placeholder="z. B. Excel, Python, Projektmanagement" rows="2" style="width:100%;padding:8px 10px;margin-top:3px;border:1.5px solid #e2e7ef;border-radius:7px;font-size:1rem;background:#fafafa;resize:vertical;min-height:34px; box-sizing: border-box;"></textarea>
-      </div>
-      <div>
-        <label for="softskills" style="font-weight: 600; font-size: 0.95rem; display:block;">Softskills</label>
-        <textarea id="softskills" name="cv.softskills" placeholder="z. B. Teamfähigkeit, Kommunikationsstärke" rows="2" style="width:100%;padding:8px 10px;margin-top:3px;border:1.5px solid #e2e7ef;border-radius:7px;font-size:1rem;background:#fafafa;resize:vertical;min-height:34px; box-sizing: border-box;"></textarea>
-      </div>
-      <div>
-        <label for="languages" style="font-weight: 600; font-size: 0.95rem; display:block;">Sprachen <span style="font-weight:400;font-size:0.9rem;">(z. B. Deutsch – C2)</span></label>
-        <textarea id="languages" name="cv.languages" placeholder="Deutsch – C2&#10;Englisch – C1" rows="2" style="width:100%;padding:8px 10px;margin-top:3px;border:1.5px solid #e2e7ef;border-radius:7px;font-size:1rem;background:#fafafa;resize:vertical;min-height:34px; box-sizing: border-box;"></textarea>
-      </div>
-      <div>
-        <label for="certificates" style="font-weight: 600; font-size: 0.95rem; display:block;">Zertifikate <span style="font-weight:400;font-size:0.9rem;">(optional)</span></label>
-        <textarea id="certificates" name="cv.certificates" placeholder="Zertifikat – Aussteller – Jahr" rows="2" style="width:100%;padding:8px 10px;margin-top:3px;border:1.5px solid #e2e7ef;border-radius:7px;font-size:1rem;background:#fafafa;resize:vertical;min-height:34px; box-sizing: border-box;"></textarea>
-      </div>
-      <div>
-        <label for="volunteering" style="font-weight: 600; font-size: 0.95rem; display:block;">Ehrenamt/Engagement <span style="font-weight:400;font-size:0.9rem;">(optional)</span></label>
-        <textarea id="volunteering" name="cv.volunteering" placeholder="Organisation – Rolle" rows="2" style="width:100%;padding:8px 10px;margin-top:3px;border:1.5px solid #e2e7ef;border-radius:7px;font-size:1rem;background:#fafafa;resize:vertical;min-height:34px; box-sizing: border-box;"></textarea>
-      </div>
+      <!-- Honeypot -->
+      <input type="text" name="_gotcha" class="hidden-field" tabindex="-1" autocomplete="off">
+
+      <h2 style="text-align:center;font-weight:900;margin-bottom:5px;">Bewerbungsformular</h2>
+      <p style="text-align:center;color:#9e9ea7;font-weight:700;margin-bottom:15px;">Mit KI – schnell, klar, erfolgreich</p>
+
+      <label for="firstName">Vorname</label>
+      <input type="text" id="firstName" name="customer.firstName" required>
+
+      <label for="lastName">Nachname</label>
+      <input type="text" id="lastName" name="customer.lastName" required>
+
+      <label for="address">Adresse</label>
+      <input type="text" id="address" name="customer.address" required>
+
+      <label for="email">E-Mail</label>
+      <input type="email" id="email" name="customer.email" required>
+
+      <label for="phone">Telefon</label>
+      <input type="tel" id="phone" name="customer.phone" required>
+
+      <label for="cvFile">Lebenslauf hochladen (PDF/DOCX)</label>
+      <input type="file" id="cvFile" name="files.cvFile" accept=".pdf,.doc,.docx" required>
+
+      <label for="skills">Fähigkeiten (Skills)</label>
+      <textarea id="skills" name="cv.skills" placeholder="z. B. Excel, Python, Projektmanagement"></textarea>
+
+      <label for="softskills">Softskills</label>
+      <textarea id="softskills" name="cv.softskills" placeholder="z. B. Teamfähigkeit, Kommunikationsstärke"></textarea>
+
+      <label for="languages">Sprachen</label>
+      <textarea id="languages" name="cv.languages" placeholder="Deutsch – C2&#10;Englisch – C1"></textarea>
+
+      <label for="certificates">Zertifikate (optional)</label>
+      <textarea id="certificates" name="cv.certificates" placeholder="Zertifikat – Aussteller – Jahr"></textarea>
+
+      <label for="volunteering">Ehrenamt/Engagement (optional)</label>
+      <textarea id="volunteering" name="cv.volunteering" placeholder="Organisation – Rolle"></textarea>
+
+      <!-- reCAPTCHA -->
+      <div class="g-recaptcha" data-sitekey="YOUR_RECAPTCHA_SITE_KEY"></div>
+
       <!-- Absenden -->
-      <button type="submit" style="margin-top:10px;width:100%;background:#18181B;color:#fff;padding:12px 0;font-size:1.1rem;font-weight:700;border:none;border-radius:8px;cursor:pointer;transition:background .18s; box-sizing: border-box;">
-        Absenden
-      </button>
+      <button type="submit">Absenden</button>
     </form>
   </div>
-</div>
 </body>
 </html>
